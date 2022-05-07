@@ -3,8 +3,7 @@ name: .NET
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  
 
 jobs:
   build:
@@ -12,14 +11,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # A projektünk letöltése egy git checkout segítségével a frissen létrehozott virtuális gépre
     - uses: actions/checkout@v3
+    # .NET környezet létrehozása a frissen létrehozott virtuális gépen 
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 5.0.x
+    # Az esetleges .NET -es függőséges kezelése
     - name: Restore dependencies
       run: dotnet restore
+    # A projekt lefordítása
     - name: Build
       run: dotnet build --no-restore
+    # A tesztek lefuttatása
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Create Release
+      uses: ncipollo/release-action@v1.10.0
+    - name: Create Release
+      uses: ncipollo/release-action@v1.10.0
+      with:
+        tag: "1.0"
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: "./UltimateApp/bin/Release/netcoreapp3.1/UltimateApp" 
+
