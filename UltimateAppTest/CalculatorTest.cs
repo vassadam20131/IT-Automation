@@ -15,6 +15,6 @@ namespace UltimateApp.Test
         {
             int? retVal = Calculator.calculate(2, 3, Operation.Add);
             Assert.AreEqual(5, retVal);
-        }
+        } 
     }
 }
